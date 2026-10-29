@@ -1,0 +1,245 @@
+/* Sennit 上架页面：隐私政策 / 技术支持
+ *
+ * 只用系统字体与中性色，深浅色跟随系统。两张页面共用这一份。
+ * 没有外部依赖（不引 Google Fonts、不引 CDN）—— 一个空链接的分析请求
+ * 就会让「我们不做任何追踪」这句话变成假话。
+ */
+
+:root {
+  --bg: #ffffff;
+  --fg: #1c1c1e;
+  --muted: #6b6b70;
+  --line: #e3e3e6;
+  --card: #f7f7f8;
+  --accent: #0a6cff;
+  --radius: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #17171a;
+    --fg: #ececee;
+    --muted: #9a9aa1;
+    --line: #2c2c31;
+    --card: #202024;
+    --accent: #5b9cff;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0 20px 72px;
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.7 -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+  letter-spacing: 0.01em;
+}
+
+.wrap {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+header.site {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 28px 0 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+header.site .brand {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+header.site nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+  margin-left: 18px;
+}
+
+header.site nav a:hover,
+header.site nav a[aria-current='page'] {
+  color: var(--fg);
+}
+
+h1 {
+  font-size: 28px;
+  line-height: 1.3;
+  margin: 40px 0 6px;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  font-size: 18px;
+  margin: 36px 0 10px;
+  letter-spacing: -0.005em;
+}
+
+h3 {
+  font-size: 15px;
+  margin: 22px 0 6px;
+}
+
+p,
+li {
+  color: var(--fg);
+}
+
+ul,
+ol {
+  padding-left: 22px;
+}
+
+li {
+  margin: 6px 0;
+}
+
+.lede {
+  color: var(--muted);
+  font-size: 15px;
+  margin: 0 0 8px;
+}
+
+.meta {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0 0 28px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 18px 0;
+}
+
+.card p:first-child {
+  margin-top: 0;
+}
+
+.card p:last-child {
+  margin-bottom: 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 15px;
+}
+
+th,
+td {
+  text-align: left;
+  vertical-align: top;
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+th {
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+code {
+  font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 1px 5px;
+}
+
+a {
+  color: var(--accent);
+}
+
+footer.site {
+  margin-top: 56px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+footer.site a {
+  color: var(--muted);
+}
+
+/* 语言切换。
+ *
+ * 默认**两版都显示**（脚本没跑时也读得到内容，宁可长，不可空白）；
+ * 脚本给 <html> 加上 .lang-ready 之后才变成「只显示当前语言」。
+ */
+html.lang-ready article[data-lang] {
+  display: none;
+}
+
+html.lang-ready article[data-lang].is-active {
+  display: block;
+}
+
+article[data-lang] + article[data-lang] {
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 1px dashed var(--line);
+}
+
+html.lang-ready article[data-lang] + article[data-lang] {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.lang-switch {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+  font-size: 13px;
+}
+
+.lang-switch button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+
+.lang-switch button[aria-pressed='true'] {
+  background: var(--card);
+  color: var(--fg);
+  font-weight: 600;
+}
+
+@media (max-width: 520px) {
+  header.site {
+    flex-wrap: wrap;
+  }
+  header.site nav a {
+    margin-left: 0;
+    margin-right: 16px;
+  }
+  h1 {
+    font-size: 24px;
+  }
+}

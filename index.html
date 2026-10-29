@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sennit · 资产、终端、传输与 AI 一个工作台</title>
+    <meta name="description" content="Sennit 是一款本地优先的 macOS 运维工作台：SSH 终端、SFTP 传输、端口转发、会话录制与 AI 助手。" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="site">
+        <span class="brand">Sennit</span>
+        <nav>
+          <a href="privacy.html">隐私政策</a>
+          <a href="support.html">技术支持</a>
+          <span class="lang-switch" role="group" aria-label="语言">
+            <button type="button" data-set-lang="zh" aria-pressed="true">中文</button>
+            <button type="button" data-set-lang="en" aria-pressed="false">English</button>
+          </span>
+        </nav>
+      </header>
+
+      <article data-lang="zh" class="is-active">
+        <h1>Sennit</h1>
+        <p class="lede">资产、终端、传输与 AI 助手，一个 macOS 工作台。</p>
+        <p class="meta">本地优先 · 无账号 · 无遥测</p>
+
+        <div class="card">
+          <p>
+            SSH / Telnet / 串口终端、SFTP 传输、端口转发、批量执行、会话录制与回放，
+            全部在这一个窗口里完成。资产与凭据以 AES-256-GCM 加密后只存在你的 Mac 上。
+          </p>
+        </div>
+
+        <h2>需要帮助？</h2>
+        <ul>
+          <li><a href="privacy.html">隐私政策</a> —— 应用会连接哪里、数据存在哪、AI 发出去的是什么</li>
+          <li><a href="support.html">技术支持</a> —— 联系方式、系统要求、App Store 版与官网版的差别、常见问题</li>
+        </ul>
+
+        <h2>联系</h2>
+        <p><a href="mailto:lifb_tc@126.com">lifb_tc@126.com</a></p>
+      </article>
+
+      <article data-lang="en">
+        <h1>Sennit</h1>
+        <p class="lede">Hosts, terminals, transfers and an AI assistant in one macOS workspace.</p>
+        <p class="meta">Local-first · No account · No telemetry</p>
+
+        <div class="card">
+          <p>
+            SSH, Telnet and serial terminals, SFTP transfers, port forwarding, batch runs, session recording and
+            replay — all in a single window. Hosts and credentials are encrypted with AES-256-GCM and stay on your Mac.
+          </p>
+        </div>
+
+        <h2>Need something?</h2>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a> — where the app connects, where data lives, what the AI sends</li>
+          <li><a href="support.html">Support</a> — contact, requirements, App Store vs. direct build, FAQ</li>
+        </ul>
+
+        <h2>Contact</h2>
+        <p><a href="mailto:lifb_tc@126.com">lifb_tc@126.com</a></p>
+      </article>
+
+      <footer class="site">
+        <p>
+          <a href="index.html">Sennit</a> ·
+          <a href="privacy.html">隐私政策 / Privacy</a> ·
+          <a href="support.html">技术支持 / Support</a>
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      ;(function () {
+        var KEY = 'sennit-page-lang'
+        function apply(lang) {
+          document.documentElement.classList.add('lang-ready')
+          document.documentElement.lang = lang === 'en' ? 'en' : 'zh-CN'
+          document.querySelectorAll('article[data-lang]').forEach(function (el) {
+            el.classList.toggle('is-active', el.getAttribute('data-lang') === lang)
+          })
+          document.querySelectorAll('[data-set-lang]').forEach(function (btn) {
+            btn.setAttribute('aria-pressed', String(btn.getAttribute('data-set-lang') === lang))
+          })
+        }
+        var stored = null
+        try {
+          stored = localStorage.getItem(KEY)
+        } catch (e) {}
+        var initial = stored || ((navigator.language || 'zh').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en')
+        apply(initial)
+        document.querySelectorAll('[data-set-lang]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var lang = btn.getAttribute('data-set-lang')
+            try {
+              localStorage.setItem(KEY, lang)
+            } catch (e) {}
+            apply(lang)
+          })
+        })
+      })()
+    </script>
+  </body>
+</html>

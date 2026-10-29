@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>技术支持 · Sennit</title>
+    <meta name="description" content="Sennit 技术支持：联系方式、系统要求、常见问题。" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="site">
+        <span class="brand">Sennit</span>
+        <nav>
+          <a href="privacy.html">隐私政策</a>
+          <a href="support.html" aria-current="page">技术支持</a>
+          <span class="lang-switch" role="group" aria-label="语言">
+            <button type="button" data-set-lang="zh" aria-pressed="true">中文</button>
+            <button type="button" data-set-lang="en" aria-pressed="false">English</button>
+          </span>
+        </nav>
+      </header>
+
+      <article data-lang="zh" class="is-active">
+        <h1>技术支持</h1>
+        <p class="meta">最后更新 2026-10-28</p>
+
+        <div class="card">
+          <p>
+            <strong>联系邮箱：</strong><a href="mailto:lifb_tc@126.com">lifb_tc@126.com</a><br />
+            一般 1–2 个工作日内回复。来信请注明应用版本（设置 → 关于）与 macOS 版本。
+          </p>
+          <p>
+            排查问题时可以附截图与错误提示，但<b>不要</b>发送你的密码、私钥或完整的主机地址。
+          </p>
+        </div>
+
+        <h2>系统要求</h2>
+        <ul>
+          <li>macOS 11 Big Sur 或更新版本</li>
+          <li>Apple Silicon 与 Intel 芯片均可</li>
+          <li>不需要注册账号，不联网也能使用全部本地功能</li>
+        </ul>
+
+        <h2>App Store 版与官网版的差别</h2>
+        <p>
+          App Store 版运行在系统沙箱里，有几个功能无法提供（不是坏了，是这一版没有）：
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>功能</th>
+              <th>App Store 版</th>
+              <th>官网版</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>SSH / Telnet / SFTP / 端口转发 / 批量执行 / 录制 / AI / 笔记</td>
+              <td>可用</td>
+              <td>可用</td>
+            </tr>
+            <tr>
+              <td>内嵌浏览器（Web 类型资产）</td>
+              <td>不含。双击资产会给出提示，资产本身不会被删除</td>
+              <td>可用</td>
+            </tr>
+            <tr>
+              <td>从 <code>~/.ssh</code> 导入配置、列出本地密钥</td>
+              <td>不含（沙箱读不到家目录）</td>
+              <td>可用</td>
+            </tr>
+            <tr>
+              <td>SFTP 本地目录</td>
+              <td>只能访问你在对话框里选择过的文件夹</td>
+              <td>任意目录</td>
+            </tr>
+            <tr>
+              <td>本地终端</td>
+              <td>不含。App Store 版的系统沙箱不允许终端设置行编辑与前台进程组，键会重复、方向键失效；需要本机 shell 请用官网完整版</td>
+              <td>可访问整台机器</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          两个版本共用同一份保险库格式：在官网版里建的资产，用 App Store 版打开也能看到（只读不影响，
+          只是那几项功能用不了）。
+        </p>
+
+        <h2>常见问题</h2>
+
+        <h3>忘记主密码了，能找回吗？</h3>
+        <p>
+          不能。保险库用 AES-256-GCM 加密，密钥由你的主密码派生，我们不保存主密码，也没有后门或托管密钥。
+          唯一的办法是用之前导出的备份恢复（备份若设了口令，同样需要那个口令）。
+        </p>
+
+        <h3>连接时提示「主机密钥未知」或「主机密钥变了」</h3>
+        <p>
+          第一次连接一台机器时，应用会问你能否信任它的主机密钥 —— 核对指纹后确认即可。
+          如果一台连过的机器突然提示密钥变了，可能是重装了系统，也可能是有人在中间人攻击，
+          这两件事应用分不出来，所以把决定权交给你：请通过其他渠道核实服务器指纹后再继续。
+        </p>
+
+        <h3>SFTP 打开本地目录时提示「需要先选择一个文件夹」</h3>
+        <p>
+          App Store 版受系统沙箱限制，只能访问你明确授权过的目录。点提示里的按钮选择一个文件夹即可，
+          之后这个文件夹里的内容就能在左侧看到。
+        </p>
+
+        <h3>AI 助手点了没反应 / 报错</h3>
+        <p>
+          AI 助手需要你自己提供 OpenAI 兼容的接口地址、API Key 与模型名（设置 → AI 服务）。
+          应用不内置任何密钥，也不会代替你请求任何第三方服务。填好后可以用「测试连接」确认。
+        </p>
+
+        <h3>会话录制存在哪？怎么看？</h3>
+        <p>
+          录制文件在 <code>~/Library/Application Support/Sennit/recordings/</code>，
+          格式是 asciicast v2（纯文本，可以直接用文本编辑器看，也能用 asciinema 播放）。
+          应用内的「会话记录」面板可以直接回放、改名与删除。
+        </p>
+
+        <h3>怎么备份？换机器怎么迁移？</h3>
+        <p>
+          设置 → 备份与还原 → 导出。两种模式：不含秘密的明文 JSON（适合审计留档），
+          或带口令密封的整份备份（含凭据，换机器时需要同一个口令）。
+          在另一台机器上用「还原」导入即可；冲突的条目按 id 判重，默认跳过。
+        </p>
+
+        <h3>为什么 App Store 版没有内嵌浏览器？</h3>
+        <p>
+          那部分需要按资产单独走代理，而系统提供的浏览器组件要到 macOS 14 才支持按视图设置代理；
+          直接降级成「全应用一条代理」会让界面显示走了隧道、实际没走 —— 那种「看起来生效、其实没有」
+          是运维工具里最不能有的东西。所以这一版不含它，官网版照常提供。
+        </p>
+
+        <h3>为什么 App Store 版没有本地终端？</h3>
+        <p>
+          不是取舍，而是系统限制：App Store 版运行在 App Sandbox 里，系统只允许应用读写伪终端的从设备，
+          <strong>不允许对它下发终端控制指令</strong>。结果是 shell 无法关闭按键回显、也无法把自己设为前台进程组 ——
+          你会看到「输入第一个字母重复一次、方向键打印成 ^[[A、必须回车才执行」。这在沙箱内无法修复，
+          所以这一版直接不提供；需要本机 shell 请用官网下载的完整版。
+        </p>
+
+        <h3>串口列表是空的</h3>
+        <p>
+          先确认 USB 转串口驱动已安装、设备已插好，然后点串口下拉旁边的刷新按钮。
+          列表为空时仍可以手工输入设备路径（如 <code>/dev/cu.usbserial-1420</code>）。
+        </p>
+
+        <h3>远程转发（-R）显示运行中，但外面连不进来</h3>
+        <p>
+          服务端的 sshd 默认只允许远程转发绑定到回环地址，需要服务端开启 <code>GatewayPorts</code>
+          才能从外部访问。这是服务端配置，不在应用控制范围内。
+        </p>
+
+        <h2>还是没解决？</h2>
+        <p>
+          把下面这些发到 <a href="mailto:lifb_tc@126.com">lifb_tc@126.com</a>，能省一轮来回：
+        </p>
+        <ul>
+          <li>应用版本（设置 → 关于）与 macOS 版本；</li>
+          <li>你做了什么、期望什么、实际发生了什么；</li>
+          <li>界面上的错误提示（截图即可，<b>请先遮住地址与用户名</b>）；</li>
+          <li>如果是连接类问题：目标系统的类型与版本（如 Ubuntu 24.04 / Cisco IOS）。</li>
+        </ul>
+      </article>
+
+      <article data-lang="en">
+        <h1>Support</h1>
+        <p class="meta">Last updated 2026-10-28</p>
+
+        <div class="card">
+          <p>
+            <strong>Email:</strong> <a href="mailto:lifb_tc@126.com">lifb_tc@126.com</a><br />
+            Usually answered within 1–2 business days. Please include the app version (Settings → About)
+            and your macOS version.
+          </p>
+          <p>
+            Screenshots and error messages help — but <b>never</b> send your passwords, private keys or full
+            host addresses.
+          </p>
+        </div>
+
+        <h2>Requirements</h2>
+        <ul>
+          <li>macOS 11 Big Sur or later</li>
+          <li>Apple Silicon and Intel both supported</li>
+          <li>No account needed; every local feature works offline</li>
+        </ul>
+
+        <h2>App Store build vs. direct-download build</h2>
+        <p>The App Store build runs inside App Sandbox, so a few features are simply not part of it:</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>App Store build</th>
+              <th>Direct build</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>SSH / Telnet / SFTP / port forwarding / batch / recording / AI / notes</td>
+              <td>Available</td>
+              <td>Available</td>
+            </tr>
+            <tr>
+              <td>Embedded browser (Web-type hosts)</td>
+              <td>Not included. Double-clicking such a host explains this; the host itself is never deleted</td>
+              <td>Available</td>
+            </tr>
+            <tr>
+              <td>Import from <code>~/.ssh</code>, list local keys</td>
+              <td>Not included (sandbox cannot read your home folder)</td>
+              <td>Available</td>
+            </tr>
+            <tr>
+              <td>SFTP local pane</td>
+              <td>Only folders you have picked in a dialog</td>
+              <td>Any folder</td>
+            </tr>
+            <tr>
+              <td>Local terminal</td>
+              <td>Not included. The App Sandbox does not let a terminal set line editing or foreground process groups, so keys repeat and arrow keys stop working; use the website build if you need a local shell</td>
+              <td>Full machine access</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          Both builds share the same vault format: hosts created in the direct build are visible in the App Store
+          build (the few unavailable features simply cannot be used there).
+        </p>
+
+        <h2>Frequently asked questions</h2>
+
+        <h3>I forgot my master password. Can you recover it?</h3>
+        <p>
+          No. The vault is encrypted with AES-256-GCM and the key is derived from your master password. We store
+          neither the password nor an escrowed key, and there is no backdoor. The only way back is a backup you
+          exported earlier (which also needs its own passphrase, if you set one).
+        </p>
+
+        <h3>"Host key unknown" or "host key has changed"</h3>
+        <p>
+          The first time you connect to a machine, the app asks you to confirm its host key — check the fingerprint
+          and accept. If a machine you have connected to before suddenly reports a changed key, it may have been
+          reinstalled — or someone may be intercepting the connection. The app cannot tell those apart, so the
+          decision is yours: verify the fingerprint through another channel before continuing.
+        </p>
+
+        <h3>The SFTP local pane asks me to pick a folder</h3>
+        <p>
+          The App Store build is sandboxed and can only reach folders you have explicitly granted. Click the button
+          in that message and pick a folder; its contents then appear in the left pane.
+        </p>
+
+        <h3>The AI assistant does nothing / returns an error</h3>
+        <p>
+          The assistant needs an OpenAI-compatible endpoint, API key and model name that you supply
+          (Settings → AI service). The app ships with no keys and never calls a third-party service on your behalf.
+          Use "Test connection" after filling them in.
+        </p>
+
+        <h3>Where are session recordings?</h3>
+        <p>
+          In <code>~/Library/Application Support/Sennit/recordings/</code>, in asciicast v2 format (plain text —
+          readable in any editor, playable with asciinema). The in-app Recordings panel can replay, rename and
+          delete them.
+        </p>
+
+        <h3>How do I back up or migrate to another Mac?</h3>
+        <p>
+          Settings → Backup &amp; Restore → Export. Two modes: a plain JSON without secrets (handy for audits), or a
+          passphrase-sealed full backup (includes credentials; the same passphrase is needed on the other machine).
+          Import it there with Restore. Duplicate entries are matched by id and skipped by default.
+        </p>
+
+        <h3>Why is there no embedded browser in the App Store build?</h3>
+        <p>
+          That feature needs a per-host proxy, and the system web view only supports per-view proxies from macOS 14.
+          Falling back to a single app-wide proxy would mean the UI shows traffic going through your tunnel while it
+          actually does not — the one failure mode an operations tool must never have. So this build leaves it out;
+          the direct build still provides it.
+        </p>
+
+        <h3>Why is there no local terminal in the App Store build?</h3>
+        <p>
+          This is a system limitation, not a design choice: the App Store build runs inside App Sandbox, which lets the app
+          read and write the pseudoterminal slave device but <strong>not send terminal control requests to it</strong>.
+          Without those, a shell cannot turn off key echo or make itself the foreground process group — you get
+          “the first letter repeated, arrow keys printed as ^[[A, and Enter required to run anything”. That cannot be fixed
+          inside the sandbox, so this build does not offer it; use the build from our website if you need a local shell.
+        </p>
+
+        <h3>The serial port list is empty</h3>
+        <p>
+          Make sure the USB-to-serial driver is installed and the device is plugged in, then hit refresh next to the
+          port dropdown. You can always type a device path manually (e.g. <code>/dev/cu.usbserial-1420</code>).
+        </p>
+
+        <h3>Remote forwarding (-R) says it is running, but nothing can connect</h3>
+        <p>
+          sshd only allows remote forwards to bind to the loopback interface by default; the server needs
+          <code>GatewayPorts</code> enabled for external access. That is a server-side setting, outside the app's
+          control.
+        </p>
+
+        <h2>Still stuck?</h2>
+        <p>Send this to <a href="mailto:lifb_tc@126.com">lifb_tc@126.com</a> and we can skip a round trip:</p>
+        <ul>
+          <li>App version (Settings → About) and macOS version;</li>
+          <li>What you did, what you expected, what actually happened;</li>
+          <li>The exact error message (a screenshot is fine — <b>mask addresses and usernames first</b>);</li>
+          <li>For connection issues: the target's OS type and version (e.g. Ubuntu 24.04 / Cisco IOS).</li>
+        </ul>
+      </article>
+
+      <footer class="site">
+        <p>
+          <a href="index.html">Sennit</a> ·
+          <a href="privacy.html">隐私政策 / Privacy</a> ·
+          <a href="support.html">技术支持 / Support</a>
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      ;(function () {
+        var KEY = 'sennit-page-lang'
+        function apply(lang) {
+          document.documentElement.classList.add('lang-ready')
+          document.documentElement.lang = lang === 'en' ? 'en' : 'zh-CN'
+          document.querySelectorAll('article[data-lang]').forEach(function (el) {
+            el.classList.toggle('is-active', el.getAttribute('data-lang') === lang)
+          })
+          document.querySelectorAll('[data-set-lang]').forEach(function (btn) {
+            btn.setAttribute('aria-pressed', String(btn.getAttribute('data-set-lang') === lang))
+          })
+        }
+        var stored = null
+        try {
+          stored = localStorage.getItem(KEY)
+        } catch (e) {}
+        var initial = stored || ((navigator.language || 'zh').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en')
+        apply(initial)
+        document.querySelectorAll('[data-set-lang]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var lang = btn.getAttribute('data-set-lang')
+            try {
+              localStorage.setItem(KEY, lang)
+            } catch (e) {}
+            apply(lang)
+          })
+        })
+      })()
+    </script>
+  </body>
+</html>

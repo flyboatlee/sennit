@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>隐私政策 · Sennit</title>
+    <meta name="description" content="Sennit 的隐私政策：本地优先、无账号、无遥测。" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="site">
+        <span class="brand">Sennit</span>
+        <nav>
+          <a href="privacy.html" aria-current="page">隐私政策</a>
+          <a href="support.html">技术支持</a>
+          <span class="lang-switch" role="group" aria-label="语言">
+            <button type="button" data-set-lang="zh" aria-pressed="true">中文</button>
+            <button type="button" data-set-lang="en" aria-pressed="false">English</button>
+          </span>
+        </nav>
+      </header>
+
+      <article data-lang="zh" class="is-active">
+        <h1>隐私政策</h1>
+        <p class="meta">最后更新 2026-10-28 · 生效日期 2026-10-28</p>
+
+        <div class="card">
+          <p>
+            <strong>一句话：</strong>Sennit 没有服务器、没有账号体系、不做任何统计。
+            你的资产、凭据、会话录制与文档只存在你自己的 Mac 上，我们看不到。
+          </p>
+        </div>
+
+        <h2>一、我们不收集什么</h2>
+        <p>下面这些是同类软件通常会做、而这个应用不做的：</p>
+        <ul>
+          <li>不收集设备标识符、IP 地址、使用时长或功能点击等使用数据；</li>
+          <li>不接入任何第三方分析、广告或崩溃上报 SDK；</li>
+          <li>不要求注册或登录，没有云端同步，没有遥测开关（因为不存在遥测）；</li>
+          <li>当前版本不检查更新，也不会定期向任何地址发请求。</li>
+        </ul>
+
+        <h2>二、你的数据存在哪里</h2>
+        <p>全部在本机。<code>~/Library/Application Support/Sennit/</code> 下：</p>
+        <table>
+          <thead>
+            <tr>
+              <th>内容</th>
+              <th>位置</th>
+              <th>保护方式</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>资产、分组、凭据、片段、端口转发规则、设置</td>
+              <td><code>store/store.db.enc</code></td>
+              <td>整库 AES-256-GCM 加密，密钥由你的主密码派生</td>
+            </tr>
+            <tr>
+              <td>会话录制</td>
+              <td><code>recordings/</code></td>
+              <td>asciicast v2 明文文件，仅本机；需要保密请自行加密磁盘</td>
+            </tr>
+            <tr>
+              <td>运行日志</td>
+              <td><code>logs/</code></td>
+              <td>仅记录连接状态与错误信息，不记录密码或私钥内容</td>
+            </tr>
+            <tr>
+              <td>笔记、备份、导入的配置</td>
+              <td>你在系统对话框里选择的位置</td>
+              <td>备份可选口令密封（AES-256-GCM + PBKDF2 派生密钥）</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          主密码不会写入磁盘。你可以选择把解锁凭据交给 macOS 系统钥匙串托管，此时由系统保护，
+          Sennit 自身不保存主密码。界面不会回显已保存的口令。
+        </p>
+
+        <h2>三、应用会发起的网络连接</h2>
+        <p>只有下面三类，全部由你的操作触发：</p>
+        <ol>
+          <li>
+            <strong>你配置的远程主机</strong> —— SSH、Telnet、SFTP、端口转发（本地 / 动态 / 远程）。
+            连接从你的 Mac 直连目标机器，我们不参与、不中转。
+          </li>
+          <li>
+            <strong>设备 Web 管理页</strong> —— 仅官网直发版提供内嵌浏览器，打开的是你在资产里填写的地址。
+            Mac App Store 版不含此功能，也不会加载任何网页。
+          </li>
+          <li>
+            <strong>AI 助手</strong> —— 默认关闭，需要你自己填写接口地址与密钥，详见下一节。
+          </li>
+        </ol>
+        <p>
+          除此之外，应用不会主动发起其他出站请求：不拉取远程配置、不上报使用情况、不查询更新。
+        </p>
+
+        <h2>四、AI 助手会把什么发出去</h2>
+        <p>只有在你配置了 AI 服务并主动提问时才会发生：</p>
+        <ul>
+          <li>
+            <strong>发什么</strong>：你的提问、当前对话上下文，以及你主动附加的材料
+            （终端屏幕上的文本、命令回执、打开文档的片段）。
+          </li>
+          <li>
+            <strong>发到哪</strong>：你自己填写的那个接口地址（OpenAI 兼容的
+            <code>/chat/completions</code>）。我们不是该地址的运营方，既不中转也不保留副本。
+          </li>
+          <li>
+            <strong>对方怎么处理</strong>：取决于该服务商自己的隐私政策 —— 请只把你信任的服务配进来。
+          </li>
+          <li>不配置 AI 服务时，应用不会产生任何 AI 请求。</li>
+        </ul>
+
+        <h2>五、剪贴板</h2>
+        <p>
+          只有你点击「复制」时才会写入系统剪贴板：复制命令、复制设备登录用户名或口令、复制远程桌面口令。
+          复制口令后可以开启自动清空。应用不会主动读取剪贴板内容。
+        </p>
+
+        <h2>六、文件访问</h2>
+        <p>
+          SFTP 本地目录、笔记库、备份与导出，只访问你在系统文件对话框里选择的位置。
+          Mac App Store 版受 App Sandbox 限制，只能访问你明确授权过的目录。应用不扫描磁盘。
+        </p>
+
+        <h2>七、第三方共享</h2>
+        <p>
+          我们不出售、不出租、不共享你的数据 —— 我们手上没有你的数据。
+          唯一的第三方是你自己配置的 AI 服务端（见第四节）。
+        </p>
+
+        <h2>八、数据保留与删除</h2>
+        <p>我们不持有数据，因此没有「保留期」。数据留在你选择的位置，直到你删除它：</p>
+        <ul>
+          <li>
+            删除保险库文件，或卸载应用 —— 注意 macOS 卸载应用<b>不会</b>自动删除
+            <code>~/Library/Application Support/Sennit/</code>，需要手动删除该目录；
+          </li>
+          <li>录制、笔记、备份是独立文件，可直接删除。</li>
+        </ul>
+        <p>
+          <strong>删除不可恢复。</strong>主密码丢失后我们无法解密你的库 —— 没有后门，也没有托管密钥。
+        </p>
+
+        <h2>九、儿童</h2>
+        <p>本应用是面向专业运维人员的工作工具，不面向 13 岁以下儿童，也不会收集儿童信息。</p>
+
+        <h2>十、政策变更</h2>
+        <p>政策变更会在本页更新并注明日期；涉及数据处理的实质变更会在应用内提示。</p>
+
+        <h2>十一、联系我们</h2>
+        <p>
+          任何隐私相关问题：<a href="mailto:lifb_tc@126.com">lifb_tc@126.com</a>
+        </p>
+      </article>
+
+      <article data-lang="en">
+        <h1>Privacy Policy</h1>
+        <p class="meta">Last updated 2026-10-28 · Effective 2026-10-28</p>
+
+        <div class="card">
+          <p>
+            <strong>In one sentence:</strong> Sennit has no servers, no accounts and no analytics.
+            Your hosts, credentials, session recordings and documents stay on your own Mac — we never see them.
+          </p>
+        </div>
+
+        <h2>1. What we do not collect</h2>
+        <p>These are things comparable tools commonly do, and this app does not:</p>
+        <ul>
+          <li>No device identifiers, IP addresses, usage duration or feature-click data;</li>
+          <li>No third-party analytics, advertising or crash-reporting SDK;</li>
+          <li>No sign-up or sign-in, no cloud sync, and no telemetry toggle (there is no telemetry);</li>
+          <li>This version does not check for updates and does not contact any address periodically.</li>
+        </ul>
+
+        <h2>2. Where your data lives</h2>
+        <p>Entirely on your Mac, under <code>~/Library/Application Support/Sennit/</code>:</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Content</th>
+              <th>Location</th>
+              <th>Protection</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Hosts, groups, credentials, snippets, port-forwarding rules, settings</td>
+              <td><code>store/store.db.enc</code></td>
+              <td>Whole database encrypted with AES-256-GCM; key derived from your master password</td>
+            </tr>
+            <tr>
+              <td>Session recordings</td>
+              <td><code>recordings/</code></td>
+              <td>asciicast v2 files in plain text, local only; encrypt your disk if they must be confidential</td>
+            </tr>
+            <tr>
+              <td>Runtime logs</td>
+              <td><code>logs/</code></td>
+              <td>Connection status and errors only — never passwords or private key material</td>
+            </tr>
+            <tr>
+              <td>Notes, backups, imported configuration</td>
+              <td>Wherever you pick in the system dialog</td>
+              <td>Backups may be sealed with a passphrase (AES-256-GCM with a PBKDF2-derived key)</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          The master password is never written to disk. You may hand the unlock secret to the macOS Keychain,
+          in which case the system protects it and Sennit stores no master password. Saved passwords are never
+          echoed back into the interface.
+        </p>
+
+        <h2>3. Network connections the app makes</h2>
+        <p>Only the following three kinds, all triggered by you:</p>
+        <ol>
+          <li>
+            <strong>The remote hosts you configure</strong> — SSH, Telnet, SFTP and port forwarding
+            (local / dynamic / remote). Connections go from your Mac straight to the target; we are not in the path.
+          </li>
+          <li>
+            <strong>Device web consoles</strong> — only the direct-download build ships an embedded browser,
+            and it opens the address stored in your host entry. The Mac App Store build does not include this
+            feature and loads no web pages at all.
+          </li>
+          <li>
+            <strong>The AI assistant</strong> — off by default; requires an endpoint and key that you supply.
+            See the next section.
+          </li>
+        </ol>
+        <p>
+          Beyond these, the app makes no outbound requests: no remote configuration, no usage reporting,
+          no update checks.
+        </p>
+
+        <h2>4. What the AI assistant sends</h2>
+        <p>This only happens when you have configured an AI service and ask a question:</p>
+        <ul>
+          <li>
+            <strong>What is sent</strong>: your question, the current conversation context, and any material you
+            explicitly attach (text from the terminal screen, command receipts, excerpts of an open document).
+          </li>
+          <li>
+            <strong>Where it goes</strong>: the endpoint you entered yourself (an OpenAI-compatible
+            <code>/chat/completions</code> URL). We do not operate that endpoint, proxy it, or keep a copy.
+          </li>
+          <li>
+            <strong>What happens next</strong> depends on that provider's own privacy policy — only configure a
+            service you trust.
+          </li>
+          <li>Without a configured AI service, no AI request is ever made.</li>
+        </ul>
+
+        <h2>5. Clipboard</h2>
+        <p>
+          The app writes to the system clipboard only when you click a copy action: copy a command, copy a device
+          login name or password, copy a remote-desktop password. Password copies can auto-clear after a configurable
+          delay. The app does not read clipboard contents on its own.
+        </p>
+
+        <h2>6. File access</h2>
+        <p>
+          The SFTP local pane, note library, backups and exports only touch locations you choose in a system file
+          dialog. The Mac App Store build runs in App Sandbox and can only reach folders you have explicitly granted.
+          The app never scans your disk.
+        </p>
+
+        <h2>7. Sharing with third parties</h2>
+        <p>
+          We do not sell, rent or share your data — we do not hold any. The only third party involved is the AI
+          endpoint you configure yourself (section 4).
+        </p>
+
+        <h2>8. Retention and deletion</h2>
+        <p>We hold no data, so there is no retention period on our side. Your data stays where you put it until you delete it:</p>
+        <ul>
+          <li>
+            Delete the vault file, or uninstall the app — note that uninstalling on macOS does <b>not</b> remove
+            <code>~/Library/Application Support/Sennit/</code>; delete that folder yourself;
+          </li>
+          <li>Recordings, notes and backups are ordinary files you can delete directly.</li>
+        </ul>
+        <p>
+          <strong>Deletion is irreversible.</strong> If the master password is lost, we cannot decrypt your vault —
+          there is no backdoor and no escrowed key.
+        </p>
+
+        <h2>9. Children</h2>
+        <p>
+          This app is a work tool for professional system administrators. It is not directed to children under 13
+          and does not collect information from them.
+        </p>
+
+        <h2>10. Changes</h2>
+        <p>
+          Changes to this policy will be published on this page with an updated date. Material changes to data
+          handling will also be surfaced inside the app.
+        </p>
+
+        <h2>11. Contact</h2>
+        <p>
+          Privacy questions: <a href="mailto:lifb_tc@126.com">lifb_tc@126.com</a>
+        </p>
+      </article>
+
+      <footer class="site">
+        <p>
+          <a href="index.html">Sennit</a> ·
+          <a href="privacy.html">隐私政策 / Privacy</a> ·
+          <a href="support.html">技术支持 / Support</a>
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      // 语言切换：默认跟随浏览器语言，选择记在 localStorage。
+      // 无 JS 时两个语言版本都完整显示（见 style.css 的 .lang-ready），所以这里失败也不会白屏。
+      ;(function () {
+        var KEY = 'sennit-page-lang'
+        function apply(lang) {
+          document.documentElement.classList.add('lang-ready')
+          document.documentElement.lang = lang === 'en' ? 'en' : 'zh-CN'
+          document.querySelectorAll('article[data-lang]').forEach(function (el) {
+            el.classList.toggle('is-active', el.getAttribute('data-lang') === lang)
+          })
+          document.querySelectorAll('[data-set-lang]').forEach(function (btn) {
+            btn.setAttribute('aria-pressed', String(btn.getAttribute('data-set-lang') === lang))
+          })
+        }
+        var stored = null
+        try {
+          stored = localStorage.getItem(KEY)
+        } catch (e) {}
+        var initial = stored || ((navigator.language || 'zh').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en')
+        apply(initial)
+        document.querySelectorAll('[data-set-lang]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var lang = btn.getAttribute('data-set-lang')
+            try {
+              localStorage.setItem(KEY, lang)
+            } catch (e) {}
+            apply(lang)
+          })
+        })
+      })()
+    </script>
+  </body>
+</html>
