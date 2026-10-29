@@ -42,16 +42,16 @@
           <li>不需要注册账号，不联网也能使用全部本地功能</li>
         </ul>
 
-        <h2>App Store 版与官网版的差别</h2>
+        <h2>受系统沙箱限制的功能</h2>
         <p>
-          App Store 版运行在系统沙箱里，有几个功能无法提供（不是坏了，是这一版没有）：
+          App Store 版运行在系统沙箱里，下面这几项能力是系统本身不提供的，因此这一版不含它们（不是坏了，也不是省掉了功能）：
         </p>
         <table>
           <thead>
             <tr>
               <th>功能</th>
               <th>App Store 版</th>
-              <th>官网版</th>
+              <th>沙箱外运行时</th>
             </tr>
           </thead>
           <tbody>
@@ -77,13 +77,13 @@
             </tr>
             <tr>
               <td>本地终端</td>
-              <td>不含。App Store 版的系统沙箱不允许终端设置行编辑与前台进程组，键会重复、方向键失效；需要本机 shell 请用官网完整版</td>
+              <td>不含。App Store 版的系统沙箱不允许应用对伪终端设置行编辑与前台进程组，键会重复、方向键失效 —— 这是系统限制，在沙箱内无法修复</td>
               <td>可访问整台机器</td>
             </tr>
           </tbody>
         </table>
         <p>
-          两个版本共用同一份保险库格式：在官网版里建的资产，用 App Store 版打开也能看到（只读不影响，
+          两个版本共用同一份保险库格式：在沙箱外运行时建的资产，用 App Store 版打开也能看到（只读不影响，
           只是那几项功能用不了）。
         </p>
 
@@ -132,7 +132,7 @@
         <p>
           那部分需要按资产单独走代理，而系统提供的浏览器组件要到 macOS 14 才支持按视图设置代理；
           直接降级成「全应用一条代理」会让界面显示走了隧道、实际没走 —— 那种「看起来生效、其实没有」
-          是运维工具里最不能有的东西。所以这一版不含它，官网版照常提供。
+          是运维工具里最不能有的东西。所以这一版不含它。
         </p>
 
         <h3>为什么 App Store 版没有本地终端？</h3>
@@ -140,7 +140,7 @@
           不是取舍，而是系统限制：App Store 版运行在 App Sandbox 里，系统只允许应用读写伪终端的从设备，
           <strong>不允许对它下发终端控制指令</strong>。结果是 shell 无法关闭按键回显、也无法把自己设为前台进程组 ——
           你会看到「输入第一个字母重复一次、方向键打印成 ^[[A、必须回车才执行」。这在沙箱内无法修复，
-          所以这一版直接不提供；需要本机 shell 请用官网下载的完整版。
+          所以这一版直接不提供。SSH 终端不受影响。
         </p>
 
         <h3>串口列表是空的</h3>
@@ -190,14 +190,14 @@
           <li>No account needed; every local feature works offline</li>
         </ul>
 
-        <h2>App Store build vs. direct-download build</h2>
-        <p>The App Store build runs inside App Sandbox, so a few features are simply not part of it:</p>
+        <h2>Features limited by App Sandbox</h2>
+        <p>The App Store build runs inside App Sandbox. The following capabilities are not provided by the system itself, so this build does not include them:</p>
         <table>
           <thead>
             <tr>
               <th>Feature</th>
               <th>App Store build</th>
-              <th>Direct build</th>
+              <th>Outside the sandbox</th>
             </tr>
           </thead>
           <tbody>
@@ -223,13 +223,13 @@
             </tr>
             <tr>
               <td>Local terminal</td>
-              <td>Not included. The App Sandbox does not let a terminal set line editing or foreground process groups, so keys repeat and arrow keys stop working; use the website build if you need a local shell</td>
+              <td>Not included. App Sandbox does not let an app set line editing or foreground process groups on a pseudoterminal, so keys repeat and arrow keys stop working — a system limitation that cannot be fixed inside the sandbox</td>
               <td>Full machine access</td>
             </tr>
           </tbody>
         </table>
         <p>
-          Both builds share the same vault format: hosts created in the direct build are visible in the App Store
+          Both builds share the same vault format: hosts created outside the sandbox are visible in the App Store
           build (the few unavailable features simply cannot be used there).
         </p>
 
@@ -281,8 +281,7 @@
         <p>
           That feature needs a per-host proxy, and the system web view only supports per-view proxies from macOS 14.
           Falling back to a single app-wide proxy would mean the UI shows traffic going through your tunnel while it
-          actually does not — the one failure mode an operations tool must never have. So this build leaves it out;
-          the direct build still provides it.
+          actually does not — the one failure mode an operations tool must never have. So this build leaves it out.
         </p>
 
         <h3>Why is there no local terminal in the App Store build?</h3>
@@ -291,7 +290,7 @@
           read and write the pseudoterminal slave device but <strong>not send terminal control requests to it</strong>.
           Without those, a shell cannot turn off key echo or make itself the foreground process group — you get
           “the first letter repeated, arrow keys printed as ^[[A, and Enter required to run anything”. That cannot be fixed
-          inside the sandbox, so this build does not offer it; use the build from our website if you need a local shell.
+          inside the sandbox, so this build does not offer it. SSH sessions are unaffected.
         </p>
 
         <h3>The serial port list is empty</h3>
